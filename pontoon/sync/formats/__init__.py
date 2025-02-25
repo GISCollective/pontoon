@@ -11,6 +11,7 @@ from pontoon.sync.formats import (
     ftl,
     json_extensions,
     json_keyvalue,
+    yaml_keyvalue,
     po,
     silme,
     xliff,
@@ -29,6 +30,7 @@ SUPPORTED_FORMAT_PARSERS = {
     "*.ini": silme.parse_ini,
     "*messages.json": json_extensions.parse,
     "*.json": json_keyvalue.parse,
+    "*.yaml": yaml_keyvalue.parse,
     "*.po": po.parse,
     "*.pot": po.parse,
     "*.properties": silme.parse_properties,
@@ -73,6 +75,9 @@ def parse(path, source_path=None, locale=None) -> ParsedResource:
         Some of the formats require information about things like e.g. plural form.
     """
     filename = os.path.basename(path)
+
+    print(filename)
+
     parser = get_format_parser(filename)
     if parser:
         return parser(path, source_path=source_path, locale=locale)
